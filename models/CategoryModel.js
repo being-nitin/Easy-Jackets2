@@ -6,6 +6,13 @@ const categorySchema = new mongoose.Schema({
     // required: true,
     // unique: true,
   },
+  code : {
+    type : String,
+  },
+  materials : [{ 
+    type : mongoose.ObjectId,
+    ref: 'material' 
+  }],
   slug: {
     type: String,
     lowercase: true,
