@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  encryptUser,
   forgotPasswordController,
   getAllOrdersController,
   getAllUsers,
@@ -23,6 +24,8 @@ router.post("/register", registerController);
 router.post("/login", loginController);
 
 router.post("/forgot-password", forgotPasswordController);
+
+router.post('/encrypt' , encryptUser)
 
 router.get("/test", requireSignin, isAdmin, testController);
 
