@@ -3,7 +3,7 @@ import slugify from "slugify";
 
 export const createCategoryController = async (req, res) => {
   try {
-    const body = {...req.body};
+    const body = { ...req.body };
     if (!body.name) {
       return res.status(401).send({ message: "Name is required" });
     }
@@ -62,6 +62,8 @@ export const updateCategoryController = async (req, res) => {
 export const categoryControlller = async (req, res) => {
   try {
     const category = await CategoryModel.find({});
+
+    console.log(category, "all category");
     res.status(200).send({
       success: true,
       message: "All Categories List",
@@ -81,6 +83,7 @@ export const categoryControlller = async (req, res) => {
 export const singleCategoryController = async (req, res) => {
   try {
     const category = await CategoryModel.findOne({ slug: req.params.slug });
+    console.log("this is individual category", category);
     res.status(200).send({
       success: true,
       message: "Get SIngle Category SUccessfully",

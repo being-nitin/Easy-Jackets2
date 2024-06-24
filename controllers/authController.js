@@ -146,32 +146,32 @@ export const forgotPasswordController = async (req, res) => {
   }
 };
 
-export const encryptUser = async (req,res) =>{
-      try{
-        const { userId } = req.body
+export const encryptUser = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    // const { userId } = req.body;
 
-        const token =  JWT.sign({ userId }, process.env.JWT_SECRET, {
-          expiresIn: '1h',
-          notBefore: '0', // Cannot use before now, can be configured to be deferred.
-          algorithm: 'HS256',
-          expiresIn : '24h'
-        })
-          
-        return res.status(200).send({
-          success: true,
-          message: "user encrypted",
-          token
-        });
-      } catch (error) {
-        console.log(error);
-        return res.status(500).send({
-          success: false,
-          message: "Something went wrong",
-          error,
-        });
-      }
-}
+    const token = JWT.sign({ userId }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+      notBefore: "0", // Cannot use before now, can be configured to be deferred.
+      algorithm: "HS256",
+      expiresIn: "24h",
+    });
 
+    return res.status(200).send({
+      success: true,
+      message: "user encrypted",
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "Something went wrong",
+      error,
+    });
+  }
+};
 
 export const testController = (req, res) => {
   try {

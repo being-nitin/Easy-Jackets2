@@ -19,6 +19,18 @@ const HomePage = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState("");
+
+  const HandleClick = async (code) => {
+    try {
+      const { data } = await axios.post("/api/v1/auth/encrypt");
+
+      console.log(data, "encrypt data");
+      setToken(data.token);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   //get all cat
   const getAllCategory = async () => {
@@ -41,6 +53,7 @@ const HomePage = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+      console.log(data, "djbjdbfjbdjfbjdbj");
       setLoading(false);
       setProducts(data.products);
     } catch (error) {
@@ -68,6 +81,7 @@ const HomePage = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+      console.log(data, "get all produts");
       setLoading(false);
       setProducts([...products, ...data?.products]);
     } catch (error) {
@@ -180,15 +194,28 @@ const HomePage = () => {
                     <button
                       className="btn btn-dark ms-1"
                       onClick={() => {
-                        setCart([...cart, p]);
-                        localStorage.setItem(
-                          "cart",
-                          JSON.stringify([...cart, p])
-                        );
-                        toast.success("Item Added to cart");
+                        HandleClick(p.category.code);
                       }}
+                      // onClick={() =>
+                      //   navigate(
+                      //     `/https://jacket-ecomm.vercel.app/?id=${5764}&token=${
+                      //       p._id
+                      //     }`
+                      //   )
+                      // }
+
+                      // setCart([...cart, p]);
+                      // localStorage.setItem(
+                      //   "cart",
+                      //   JSON.stringify([...cart, p])
+                      // );
+                      // toast.success("Item Added to cart")
                     >
-                      ADD TO CART
+                      <a
+                        href={`https://jacket-ecomm.vercel.app/?id=${p.category.code}&token=${token}`}
+                      >
+                        Customize
+                      </a>
                     </button>
                   </div>
                 </div>

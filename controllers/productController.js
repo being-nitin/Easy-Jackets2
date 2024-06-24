@@ -236,7 +236,8 @@ export const productListController = async (req, res) => {
     const perPage = 6;
     const page = req.params.page ? req.params.page : 1;
     const products = await productModel
-      .find({})
+      .find()
+      .populate("category")
       .select("-photo")
       .skip((page - 1) * perPage)
       .limit(perPage)
