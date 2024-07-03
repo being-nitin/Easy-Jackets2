@@ -36,10 +36,10 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState("");
 
-  const HandleClick = async (code) => {
-    try {
-      const { data } = await axios.post("/api/v1/auth/encrypt");
 
+  const handleClick = async () => {
+    try {
+      const { data } = await axios.get("/api/v1/auth/encrypt");
       console.log(data, "encrypt data");
       setToken(data.token);
     } catch (error) {
@@ -47,6 +47,7 @@ const HomePage = () => {
     }
   };
 
+console.log(token)
   //get all cat
   const getAllCategory = async () => {
     try {
@@ -62,13 +63,14 @@ const HomePage = () => {
   useEffect(() => {
     getAllCategory();
     getTotal();
+    handleClick()
   }, []);
   //get products
   const getAllProducts = async () => {
     try {
       setLoading(true);
       const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
-      console.log(data, "djbjdbfjbdjfbjdbj");
+      console.log(data, "product");
       setLoading(false);
       setProducts(data.products);
     } catch (error) {
@@ -179,7 +181,7 @@ const HomePage = () => {
                         </button>
                         <button
                           className="btn btn-dark ms-1"
-                          onClick={() => HandleClick(p.category.code)}
+                          onClick={() => handleClick(p.category.code)}
                         >
                           <a
                             href={`https://jacket-ecomm.vercel.app/?id=${p.category.code}&token=${token}`}
@@ -214,78 +216,69 @@ const HomePage = () => {
               )}
             </div>
           </div>
-
-          <div className="parent-container">
-            <div className="banner-container d-flex justify-content-center align-items-center">
-              <div className="banner-content d-flex justify-content-center align-items-center">
-                <img
-                  src={ImageEasy}
-                  className="banner-img"
-                  alt="banner image"
-                />
-              </div>
-            </div>
-
-            <div className="banner-container d-flex justify-content-center align-items-center">
-              <img src={Logo1} alt="Logo 1" />
-              <img src={Logo2} alt="Logo 2" />
-              <img src={Logo3} alt="Logo 3" />
-              <img src={Logo4} alt="Logo 4" />
-              <img src={Logo5} alt="Logo 5" />
-            </div>
+          <div className="d-flex flex-column">
+            <button
+              className="btn btn-danger"
+              onClick={() => window.location.reload()}
+            >
+              RESET FILTERS
+            </button>
           </div>
+        </div>
+        <div className="col-md-9 ">
+          <h1 className="text-center">All Products</h1>
+          <div className="d-flex flex-wrap">
+            {products?.map((p) => (
+              <div className="card m-2" key={p._id}>
+                <img
+                  src={`/api/v1/product/product-photo/${p._id}`}
+                  className="card-img-top"
+                  alt={p.name}
+                />
+                <div className="card-body">
+                  <div className="card-name-price">
+                    <h5 className="card-title">{p.name}</h5>
+                    <h5 className="card-title card-price">
+                      {p.price.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      })}
+                    </h5>
+                  </div>
+                  <p className="card-text ">
+                    {p.description.substring(0, 60)}...
+                  </p>
+                  <div className="card-name-price">
+                    <button
+                      className="btn btn-info ms-1"
+                      onClick={() => navigate(`/product/${p.slug}`)}
+                    >
+                      More Details
+                    </button>
+                    <button
+                      className="btn btn-dark ms-1"
+                      // onClick={() =>
+                      //   navigate(
+                      //     `/https://jacket-ecomm.vercel.app/?id=${5764}&token=${
+                      //       p._id
+                      //     }`
+                      //   )
+                      // }
 
-          <div
-            style={{
-              display: "flex",
-              marginBottom: "20%",
-            }}
-          >
-            <img
-              src={SocialBanner}
-              style={{
-                width: "50%",
-                height: "80%",
-              }}
-            />
-            <div className="carousel-container">
-              <div
-                id="carouselExampleIndicators"
-                className="carousel slide"
-                data-bs-ride="carousel"
-                data-bs-interval="3000" // Interval in milliseconds (3000ms = 3 seconds)
-              >
-                <div className="carousel-indicators">
-                  <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="0"
-                    className="active"
-                    aria-current="true"
-                    aria-label="Slide 1"
-                  ></button>
-                  <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="1"
-                    aria-label="Slide 2"
-                  ></button>
-                  <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="2"
-                    aria-label="Slide 3"
-                  ></button>
-                </div>
-                <div className="carousel-inner">
-                  <div className="carousel-item active">
-                    <img src={Re1} className="d-block w-100" alt="Review 1" />
-                  </div>
-                  <div className="carousel-item">
-                    <img src={Re2} className="d-block w-100" alt="Review 2" />
-                  </div>
-                  <div className="carousel-item">
-                    <img src={Re3} className="d-block w-100" alt="Review 3" />
+                      // setCart([...cart, p]);
+                      // localStorage.setItem(
+                      //   "cart",
+                      //   JSON.stringify([...cart, p])
+                      // );
+                      // toast.success("Item Added to cart")
+                    >
+                      <a
+                        href={`https://jacket-ecomm.vercel.app/?id=${p.category.code}&token=${token}`}
+                        target="_blank"
+                      >
+                        Customize
+                      </a>
+                    </button>
                   </div>
                 </div>
                 <a
@@ -313,6 +306,7 @@ const HomePage = () => {
                   <span className="sr-only">Next</span>
                 </a>
               </div>
+            ))}
             </div>
           </div>
 
@@ -356,7 +350,7 @@ const HomePage = () => {
             </div> */}
           </div>
         </div>
-      </div>
+      
     </Layout>
   );
 };
