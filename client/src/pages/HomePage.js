@@ -9,6 +9,21 @@ import toast from "react-hot-toast";
 import "../styles/Homepage.css";
 import { AiOutlineReload } from "react-icons/ai";
 import bannerImage from "../pages/images/banner.png";
+import UpperImage from "../../src/pages/images/upper-image.jpg";
+import ImageEasy from "../../src/pages/images/image-easy.png";
+import Logo1 from "../../src/pages/images/logo11.png";
+import Logo2 from "../../src/pages/images/logo-12.png";
+import Logo3 from "../../src/pages/images/logo13.png";
+import Logo4 from "../../src/pages/images/logo14.png";
+import Logo5 from "../../src/pages/images/logo15.png";
+import SocialBanner from "../../src/pages/images/social_banner.png";
+// import Review1 from "../../src/pages/images/review2.png";
+// import Review2 from "../../src/pages/images/review3.png";
+// import Review3 from "../../src/pages/images/review4.png";
+import Re1 from "../../src/pages/images/re1.png";
+import Re2 from "../../src/pages/images/re2.png";
+import Re3 from "../../src/pages/images/re3.png";
+import SideImage from "../../src/pages/images/side-image.png";
 const HomePage = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useCart();
@@ -123,124 +138,222 @@ const HomePage = () => {
   return (
     <Layout title={"ALl Products - Best offers "}>
       <img
-        src={bannerImage}
+        src={UpperImage}
         className="banner-img"
         alt="bannerimage"
         width={"100%"}
       />
-      <div className="container-fluid row mt-3 home-page">
-        <div className="col-md-3 filters">
-          <h4 className="text-center">Filter By Category</h4>
-          <div className="d-flex flex-column">
-            {categories?.map((c) => (
-              <Checkbox
-                key={c._id}
-                onChange={(e) => handleFilter(e.target.checked, c._id)}
-              >
-                {c.name}
-              </Checkbox>
-            ))}
-          </div>
-          {/* price filter */}
-          <h4 className="text-center mt-4">Filter By Price</h4>
-          <div className="d-flex flex-column">
-            <Radio.Group onChange={(e) => setRadio(e.target.value)}>
-              {Prices?.map((p) => (
-                <div key={p._id}>
-                  <Radio value={p.array}>{p.name}</Radio>
+      <div className="container-fluid d-flex justify-content-center align-items-center vh-60 home-page">
+        <div className="row w-100 mx-0">
+          <div className="col-md-3 filters"></div>
+          <div className="col-md-9 ms-3">
+            <h1 className="text-center">Top Products</h1>
+            <div className="row justify-content-center">
+              {products?.map((p) => (
+                <div className="col-md-3 d-flex" key={p._id}>
+                  <div className="card m-2 w-100">
+                    <img
+                      src={`/api/v1/product/product-photo/${p._id}`}
+                      className="card-img-top"
+                      alt={p.name}
+                    />
+                    <div className="card-body">
+                      <div className="card-name-price d-flex justify-content-between">
+                        <h5 className="card-title">{p.name}</h5>
+                        <h5 className="card-title card-price">
+                          {p.price.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                          })}
+                        </h5>
+                      </div>
+                      <p className="card-text">
+                        {p.description.substring(0, 60)}...
+                      </p>
+                      <div className="card-name-price d-flex justify-content-between">
+                        <button
+                          className="btn btn-info ms-1"
+                          onClick={() => navigate(`/product/${p.slug}`)}
+                        >
+                          More Details
+                        </button>
+                        <button
+                          className="btn btn-dark ms-1"
+                          onClick={() => HandleClick(p.category.code)}
+                        >
+                          <a
+                            href={`https://jacket-ecomm.vercel.app/?id=${p.category.code}&token=${token}`}
+                            className="text-light"
+                          >
+                            Customize
+                          </a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))}
-            </Radio.Group>
+            </div>
+            <div className="m-2 p-3 text-center">
+              {products && products.length < total && (
+                <button
+                  className="btn loadmore"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPage(page + 1);
+                  }}
+                >
+                  {loading ? (
+                    "Loading ..."
+                  ) : (
+                    <>
+                      Load more <AiOutlineReload />
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
           </div>
-          <div className="d-flex flex-column">
-            <button
-              className="btn btn-danger"
-              onClick={() => window.location.reload()}
-            >
-              RESET FILTERS
-            </button>
-          </div>
-        </div>
-        <div className="col-md-9 ">
-          <h1 className="text-center">All Products</h1>
-          <div className="d-flex flex-wrap">
-            {products?.map((p) => (
-              <div className="card m-2" key={p._id}>
-                <img
-                  src={`/api/v1/product/product-photo/${p._id}`}
-                  className="card-img-top"
-                  alt={p.name}
-                />
-                <div className="card-body">
-                  <div className="card-name-price">
-                    <h5 className="card-title">{p.name}</h5>
-                    <h5 className="card-title card-price">
-                      {p.price.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                      })}
-                    </h5>
-                  </div>
-                  <p className="card-text ">
-                    {p.description.substring(0, 60)}...
-                  </p>
-                  <div className="card-name-price">
-                    <button
-                      className="btn btn-info ms-1"
-                      onClick={() => navigate(`/product/${p.slug}`)}
-                    >
-                      More Details
-                    </button>
-                    <button
-                      className="btn btn-dark ms-1"
-                      onClick={() => {
-                        HandleClick(p.category.code);
-                      }}
-                      // onClick={() =>
-                      //   navigate(
-                      //     `/https://jacket-ecomm.vercel.app/?id=${5764}&token=${
-                      //       p._id
-                      //     }`
-                      //   )
-                      // }
 
-                      // setCart([...cart, p]);
-                      // localStorage.setItem(
-                      //   "cart",
-                      //   JSON.stringify([...cart, p])
-                      // );
-                      // toast.success("Item Added to cart")
-                    >
-                      <a
-                        href={`https://jacket-ecomm.vercel.app/?id=${p.category.code}&token=${token}`}
-                      >
-                        Customize
-                      </a>
-                    </button>
+          <div className="parent-container">
+            <div className="banner-container d-flex justify-content-center align-items-center">
+              <div className="banner-content d-flex justify-content-center align-items-center">
+                <img
+                  src={ImageEasy}
+                  className="banner-img"
+                  alt="banner image"
+                />
+              </div>
+            </div>
+
+            <div className="banner-container d-flex justify-content-center align-items-center">
+              <img src={Logo1} alt="Logo 1" />
+              <img src={Logo2} alt="Logo 2" />
+              <img src={Logo3} alt="Logo 3" />
+              <img src={Logo4} alt="Logo 4" />
+              <img src={Logo5} alt="Logo 5" />
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              marginBottom: "20%",
+            }}
+          >
+            <img
+              src={SocialBanner}
+              style={{
+                width: "50%",
+                height: "80%",
+              }}
+            />
+            <div className="carousel-container">
+              <div
+                id="carouselExampleIndicators"
+                className="carousel slide"
+                data-bs-ride="carousel"
+                data-bs-interval="3000" // Interval in milliseconds (3000ms = 3 seconds)
+              >
+                <div className="carousel-indicators">
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="0"
+                    className="active"
+                    aria-current="true"
+                    aria-label="Slide 1"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="1"
+                    aria-label="Slide 2"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="2"
+                    aria-label="Slide 3"
+                  ></button>
+                </div>
+                <div className="carousel-inner">
+                  <div className="carousel-item active">
+                    <img src={Re1} className="d-block w-100" alt="Review 1" />
+                  </div>
+                  <div className="carousel-item">
+                    <img src={Re2} className="d-block w-100" alt="Review 2" />
+                  </div>
+                  <div className="carousel-item">
+                    <img src={Re3} className="d-block w-100" alt="Review 3" />
                   </div>
                 </div>
+                <a
+                  className="carousel-control-prev"
+                  href="#carouselExampleIndicators"
+                  role="button"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    // className="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="sr-only">Previous</span>
+                </a>
+                <a
+                  className="carousel-control-next"
+                  href="#carouselExampleIndicators"
+                  role="button"
+                  data-bs-slide="next"
+                >
+                  <span
+                    // className="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="sr-only">Next</span>
+                </a>
               </div>
-            ))}
+            </div>
           </div>
-          <div className="m-2 p-3">
-            {products && products.length < total && (
-              <button
-                className="btn loadmore"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPage(page + 1);
-                }}
-              >
-                {loading ? (
-                  "Loading ..."
-                ) : (
-                  <>
-                    {" "}
-                    Loadmore <AiOutlineReload />
-                  </>
-                )}
-              </button>
-            )}
+
+          <div className="parent-container">
+            <div className="banner-container d-flex justify-content-center align-items-center">
+              <div>
+                <h2
+                  style={{
+                    fontFamily: "serif",
+                  }}
+                >
+                  Customize your design
+                </h2>
+                <br />
+                <p
+                  style={{
+                    fontFamily: "serif",
+                  }}
+                >
+                  Great design is born of two elements "Simplicity and clarity{" "}
+                </p>
+              </div>
+              <div className="banner-content d-flex justify-content-center align-items-center">
+                <img
+                  src={SideImage}
+                  style={{
+                    height: "200%",
+                  }}
+                  className="banner-img"
+                  alt="banner image"
+                />
+              </div>
+            </div>
+
+            {/* <div className="banner-container d-flex justify-content-center align-items-center">
+              <img src={Logo1} alt="Logo 1" />
+              <img src={Logo2} alt="Logo 2" />
+              <img src={Logo3} alt="Logo 3" />
+              <img src={Logo4} alt="Logo 4" />
+              <img src={Logo5} alt="Logo 5" />
+            </div> */}
           </div>
         </div>
       </div>
