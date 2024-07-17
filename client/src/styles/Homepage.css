@@ -90,7 +90,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height to center vertically */
+    height: 120vh; /* Full viewport height to center vertically */
   }
   
   .banner-container {
@@ -194,4 +194,137 @@
   background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   padding: 1rem;
   border-radius: 8px;
+}
+
+.home-page {
+  background: #f8f9fa;
+}
+
+.card {
+  border: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.product-img {
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 10px;
+}
+
+.product-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.banner-container {
+  margin-top: 30px;
+}
+
+.banner-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.logo-img {
+  max-width: 100px;
+  height: auto;
+}
+
+.carousel-container .carousel-indicators [data-bs-target] {
+  background-color: #333;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #333;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+}
+
+.btn-dark {
+  background-color: #343a40;
+  border-color: #343a40;
+}
+
+.btn-info:hover,
+.btn-dark:hover {
+  opacity: 0.9;
+}
+
+.display-4 {
+  font-size: 2.5rem;
+}
+
+.fw-bold {
+  font-weight: 700;
+}
+
+.lead {
+  font-size: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .banner-content img {
+      max-width: 80%;
+  }
+}
+.carousel-fade .carousel-item {
+  transition: opacity 1s ease-in-out;
+}
+.carousel-fade .carousel-item,
+.carousel-fade .active.carousel-item-start,
+.carousel-fade .active.carousel-item-end {
+  opacity: 0;
+}
+.carousel-fade .active,
+.carousel-fade .carousel-item-next.carousel-item-start,
+.carousel-fade .carousel-item-prev.carousel-item-end {
+  opacity: 1;
+}
+
+.carousel-indicators button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #555;
+}
+.carousel-indicators .active {
+  background-color: #fff;
+}
+
+.overlay-container {
+  position: relative;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.overlay-container:hover .overlay {
+  opacity: 1;
+}
+
+/* Fix the image size */
+.fixed-size {
+  width: 100%;
+  height: 500px; /* Set a fixed height */
+  object-fit: cover; /* Ensure the image covers the container without distortion */
 }

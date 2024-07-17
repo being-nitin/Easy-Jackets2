@@ -17,6 +17,13 @@ import Logo3 from "../../src/pages/images/logo13.png";
 import Logo4 from "../../src/pages/images/logo14.png";
 import Logo5 from "../../src/pages/images/logo15.png";
 import SocialBanner from "../../src/pages/images/social_banner.png";
+import PhotoGal1 from "../../src/pages/images/PhotoGal1.png";
+import PhotoGal2 from "../../src/pages/images/PhotoGal2.png";
+import Quality from "../../src/pages/images/quality.png";
+import Cor1 from "../../src/pages/images/cor1.png";
+import Cor2 from "../../src/pages/images/cor2.png";
+import Cor3 from "../../src/pages/images/cor3.png";
+
 // import Review1 from "../../src/pages/images/review2.png";
 // import Review2 from "../../src/pages/images/review3.png";
 // import Review3 from "../../src/pages/images/review4.png";
@@ -37,7 +44,7 @@ const HomePage = () => {
   const [token, setToken] = useState("");
 
 
-  const handleClick = async () => {
+  const HandleClick = async () => {
     try {
       const { data } = await axios.get("/api/v1/auth/encrypt");
       console.log(data, "encrypt data");
@@ -63,7 +70,7 @@ console.log(token)
   useEffect(() => {
     getAllCategory();
     getTotal();
-    handleClick()
+    HandleClick()
   }, []);
   //get products
   const getAllProducts = async () => {
@@ -98,7 +105,7 @@ console.log(token)
     try {
       setLoading(true);
       const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
-      console.log(data, "get all produts");
+      console.log(data, "get all products");
       setLoading(false);
       setProducts([...products, ...data?.products]);
     } catch (error) {
@@ -138,54 +145,77 @@ console.log(token)
     }
   };
   return (
-    <Layout title={"ALl Products - Best offers "}>
+    <Layout title={"All Products - Best offers "}>
       <img
         src={UpperImage}
         className="banner-img"
         alt="bannerimage"
         width={"100%"}
+        style={{ maxWidth: "100%", objectFit: "cover" }}
       />
-      <div className="container-fluid d-flex justify-content-center align-items-center vh-60 home-page">
+      <div
+        className="container-fluid d-flex flex-column justify-content-center align-items-center min-vh-100 home-page"
+        style={{ overflowX: "hidden" }}
+      >
         <div className="row w-100 mx-0">
-          <div className="col-md-3 filters"></div>
+          <div className="col-md-3 filters d-none d-md-block">
+            {/* <!-- Filters section can be added here --> */}
+          </div>
           <div className="col-md-9 ms-3">
-            <h1 className="text-center">Top Products</h1>
+            <h1
+              className="text-center mb-4"
+              style={{
+                fontFamily: "'Times New Roman', Times, serif",
+                color: "#333",
+              }}
+            >
+              Top Products
+            </h1>
             <div className="row justify-content-center">
               {products?.map((p) => (
-                <div className="col-md-3 d-flex" key={p._id}>
-                  <div className="card m-2 w-100">
+                <div key={p._id} className="col-md-4 col-lg-3 mb-4">
+                  <div
+                    className="card h-100 shadow-sm"
+                    style={{ transition: "transform 0.3s ease" }}
+                  >
                     <img
                       src={`/api/v1/product/product-photo/${p._id}`}
-                      className="card-img-top"
+                      className="product-img card-img-top"
                       alt={p.name}
+                      style={{ transition: "transform 0.3s ease" }}
+                      onMouseOver={(e) =>
+                        (e.currentTarget.style.transform = "scale(1.05)")
+                      }
+                      onMouseOut={(e) =>
+                        (e.currentTarget.style.transform = "scale(1)")
+                      }
                     />
-                    <div className="card-body">
-                      <div className="card-name-price d-flex justify-content-between">
-                        <h5 className="card-title">{p.name}</h5>
-                        <h5 className="card-title card-price">
-                          {p.price.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                          })}
-                        </h5>
-                      </div>
+                    <div className="card-body d-flex flex-column">
+                      <h5 className="card-title">{p.name}</h5>
+                      <h6 className="card-title card-price text-muted">
+                        {p.price.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                        })}
+                      </h6>
                       <p className="card-text">
                         {p.description.substring(0, 60)}...
                       </p>
-                      <div className="card-name-price d-flex justify-content-between">
+                      <div className="mt-auto d-flex justify-content-between">
                         <button
-                          className="btn btn-info ms-1"
+                          className="btn btn-info me-2"
                           onClick={() => navigate(`/product/${p.slug}`)}
                         >
-                          More Details
+                          Add To Cart
                         </button>
                         <button
-                          className="btn btn-dark ms-1"
-                          onClick={() => handleClick(p.category.code)}
+                          className="btn btn-dark"
+                          onClick={() => HandleClick(p.category.code)}
                         >
                           <a
                             href={`https://jacket-ecomm.vercel.app/?id=${p.category.code}&token=${token}`}
                             className="text-light"
+                            style={{ textDecoration: "none" }}
                           >
                             Customize
                           </a>
@@ -199,7 +229,7 @@ console.log(token)
             <div className="m-2 p-3 text-center">
               {products && products.length < total && (
                 <button
-                  className="btn loadmore"
+                  className="btn loadmore btn-primary"
                   onClick={(e) => {
                     e.preventDefault();
                     setPage(page + 1);
@@ -216,141 +246,279 @@ console.log(token)
               )}
             </div>
           </div>
-          <div className="d-flex flex-column">
-            <button
-              className="btn btn-danger"
-              onClick={() => window.location.reload()}
-            >
-              RESET FILTERS
-            </button>
+        </div>
+        <div className="parent-container">
+          <div className="banner-container d-flex justify-content-center align-items-center">
+            <div className="banner-content d-flex justify-content-center align-items-center">
+              <img
+                src={ImageEasy}
+                className="banner-img img-fluid"
+                alt="banner image"
+              />
+            </div>
+          </div>
+          <div className="banner-container d-flex justify-content-around align-items-center my-4">
+            <img src={Logo1} className="logo-img" alt="Logo 1" />
+            <img src={Logo2} className="logo-img" alt="Logo 2" />
+            <img src={Logo3} className="logo-img" alt="Logo 3" />
+            <img src={Logo4} className="logo-img" alt="Logo 4" />
+            <img src={Logo5} className="logo-img" alt="Logo 5" />
           </div>
         </div>
-        <div className="col-md-9 ">
-          <h1 className="text-center">All Products</h1>
-          <div className="d-flex flex-wrap">
-            {products?.map((p) => (
-              <div className="card m-2" key={p._id}>
-                <img
-                  src={`/api/v1/product/product-photo/${p._id}`}
-                  className="card-img-top"
-                  alt={p.name}
-                />
-                <div className="card-body">
-                  <div className="card-name-price">
-                    <h5 className="card-title">{p.name}</h5>
-                    <h5 className="card-title card-price">
-                      {p.price.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                      })}
-                    </h5>
-                  </div>
-                  <p className="card-text ">
-                    {p.description.substring(0, 60)}...
-                  </p>
-                  <div className="card-name-price">
-                    <button
-                      className="btn btn-info ms-1"
-                      onClick={() => navigate(`/product/${p.slug}`)}
-                    >
-                      More Details
-                    </button>
-                    <button
-                      className="btn btn-dark ms-1"
-                      // onClick={() =>
-                      //   navigate(
-                      //     `/https://jacket-ecomm.vercel.app/?id=${5764}&token=${
-                      //       p._id
-                      //     }`
-                      //   )
-                      // }
+        <div className="d-flex flex-column flex-md-row justify-content-center align-items-center mb-5">
+          <img
+            src={SocialBanner}
+            className="img-fluid mb-3 mb-md-0"
+            style={{ maxWidth: "50%" }}
+          />
+          <div className="carousel-container ms-md-4">
+            <div
+              id="carouselExampleIndicators"
+              className="carousel slide"
+              data-bs-ride="carousel"
+              data-bs-interval="3000"
+            >
+              <div className="carousel-indicators">
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide-to="0"
+                  className="active"
+                  aria-current="true"
+                  aria-label="Slide 1"
+                ></button>
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide-to="1"
+                  aria-label="Slide 2"
+                ></button>
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide-to="2"
+                  aria-label="Slide 3"
+                ></button>
+              </div>
+              <div className="carousel-inner">
+                <div className="carousel-item active">
+                  <img src={Re1} className="d-block w-100" alt="Review 1" />
+                </div>
+                <div className="carousel-item">
+                  <img src={Re2} className="d-block w-100" alt="Review 2" />
+                </div>
+                <div className="carousel-item">
+                  <img src={Re3} className="d-block w-100" alt="Review 3" />
+                </div>
+              </div>
+              <button
+                className="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev"
+              >
+                <span
+                  className="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Previous</span>
+              </button>
+              <button
+                className="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next"
+              >
+                <span
+                  className="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="parent-container">
+          <div className="banner-container d-flex justify-content-center align-items-center">
+            <div>
+              <h1
+                className="display-4 fw-bold"
+                style={{
+                  fontFamily: "'Times New Roman', Times, serif",
+                  color: "#333",
+                }}
+              >
+                Customize your design
+              </h1>
+              <p className="lead">
+                Great design is born of two elements: Simplicity and clarity
+              </p>
+            </div>
+            <div className="banner-content d-flex justify-content-center align-items-center">
+              <img
+                src={SideImage}
+                className="banner-img img-fluid"
+                alt="banner image"
+              />
+            </div>
+          </div>
+          <h3 className="text-center mt-5 fw-bold">Customize Here</h3>
+        </div>
 
-                      // setCart([...cart, p]);
-                      // localStorage.setItem(
-                      //   "cart",
-                      //   JSON.stringify([...cart, p])
-                      // );
-                      // toast.success("Item Added to cart")
-                    >
-                      <a
-                        href={`https://jacket-ecomm.vercel.app/?id=${p.category.code}&token=${token}`}
-                        target="_blank"
-                      >
-                        Customize
-                      </a>
-                    </button>
+        <div
+          className="parent-container"
+          style={{
+            width: "100%",
+          }}
+        >
+          <div
+            className="banner-container d-flex justify-content-center align-items-center"
+            style={{
+              width: "45%",
+            }}
+          >
+            <img
+              style={{
+                cursor: "pointer",
+                transition: "transform 0.3s ease",
+                margin: "10px",
+                border: "1px solid #ddd",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
+              src={PhotoGal1}
+              className="banner-img img-fluid"
+              alt="banner image"
+              onMouseOver={(e) =>
+                (e.currentTarget.style.transform = "scale(1.05)")
+              }
+              onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              onClick={() => navigate(`/our-work`)}
+            />
+            <img
+              style={{
+                cursor: "pointer",
+                transition: "transform 0.3s ease",
+                margin: "10px",
+                border: "1px solid #ddd",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
+              src={PhotoGal2}
+              className="banner-img img-fluid"
+              alt="banner image"
+              onMouseOver={(e) =>
+                (e.currentTarget.style.transform = "scale(1.05)")
+              }
+              onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            />
+          </div>
+        </div>
+
+        <div
+          className="parent-container"
+          style={{
+            width: "100%",
+          }}
+        >
+          <div
+            className="banner-container d-flex justify-content-center align-items-center"
+            style={{
+              width: "100%",
+            }}
+          >
+            <img
+              style={{
+                cursor: "pointer",
+                transition: "transform 0.3s ease",
+                margin: "10px",
+                border: "1px solid #ddd",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
+              src={Quality}
+              className="banner-img img-fluid"
+              alt="banner image"
+              onMouseOver={(e) =>
+                (e.currentTarget.style.transform = "scale(1.05)")
+              }
+              onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              onClick={() => navigate(`/our-work`)}
+            />
+          </div>
+        </div>
+        <div className="d-flex flex-column flex-md-row justify-content-center align-items-center mb-5">
+          <div className="carousel-container ms-md-4">
+            <div
+              id="carouselExampleIndicators"
+              className="carousel slide carousel-fade"
+              data-bs-ride="carousel"
+              data-bs-interval="3000"
+            >
+              <div className="carousel-indicators">
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide-to="0"
+                  className="active"
+                  aria-current="true"
+                  aria-label="Slide 1"
+                ></button>
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide-to="1"
+                  aria-label="Slide 2"
+                ></button>
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide-to="2"
+                  aria-label="Slide 3"
+                ></button>
+              </div>
+              <div className="carousel-inner">
+                <div className="carousel-item active">
+                  <div className="overlay-container">
+                    <img
+                      src={Cor1}
+                      className="d-block w-100 fixed-size"
+                      alt="Review 1"
+                    />
+                    <div className="overlay">
+                      <h3>Review 1</h3>
+                      <p>Some description for review 1</p>
+                    </div>
                   </div>
                 </div>
-                <a
-                  className="carousel-control-prev"
-                  href="#carouselExampleIndicators"
-                  role="button"
-                  data-bs-slide="prev"
-                >
-                  <span
-                    // className="carousel-control-prev-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="sr-only">Previous</span>
-                </a>
-                <a
-                  className="carousel-control-next"
-                  href="#carouselExampleIndicators"
-                  role="button"
-                  data-bs-slide="next"
-                >
-                  <span
-                    // className="carousel-control-next-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="sr-only">Next</span>
-                </a>
-              </div>
-            ))}
-            </div>
-          </div>
-
-          <div className="parent-container">
-            <div className="banner-container d-flex justify-content-center align-items-center">
-              <div>
-                <h2
-                  style={{
-                    fontFamily: "serif",
-                  }}
-                >
-                  Customize your design
-                </h2>
-                <br />
-                <p
-                  style={{
-                    fontFamily: "serif",
-                  }}
-                >
-                  Great design is born of two elements "Simplicity and clarity{" "}
-                </p>
-              </div>
-              <div className="banner-content d-flex justify-content-center align-items-center">
-                <img
-                  src={SideImage}
-                  style={{
-                    height: "200%",
-                  }}
-                  className="banner-img"
-                  alt="banner image"
-                />
+                <div className="carousel-item">
+                  <div className="overlay-container">
+                    <img
+                      src={Cor2}
+                      className="d-block w-100 fixed-size"
+                      alt="Review 2"
+                    />
+                    <div className="overlay">
+                      <h3>Review 2</h3>
+                      <p>Some description for review 2</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="carousel-item">
+                  <div className="overlay-container">
+                    <img
+                      src={Cor3}
+                      className="d-block w-100 fixed-size"
+                      alt="Review 3"
+                    />
+                    <div className="overlay">
+                      <h3>Review 3</h3>
+                      <p>Some description for review 3</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-
-            {/* <div className="banner-container d-flex justify-content-center align-items-center">
-              <img src={Logo1} alt="Logo 1" />
-              <img src={Logo2} alt="Logo 2" />
-              <img src={Logo3} alt="Logo 3" />
-              <img src={Logo4} alt="Logo 4" />
-              <img src={Logo5} alt="Logo 5" />
-            </div> */}
           </div>
         </div>
-      
+      </div>
     </Layout>
   );
 };
