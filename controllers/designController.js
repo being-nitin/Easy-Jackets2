@@ -35,34 +35,33 @@ export const getDesignDataByCategoryCode = async (req, res) => {
         message: "Eror while getitng design",
         error,
     });
-    }
-         
+    }      
 }
 
 
 // save design and then save cart
 export const save_design_to_cart  = async(req, res) => {
     try{
-        const { token } = req.query
+        // const { token } = req.query
 
-        const decode = await JWT.verify(token , process.env.JWT_SECRET ,{
-            complete: true,
-            algorithms: ['HS256'],
-            clockTolerance: 0,
-            ignoreExpiration: false,
-            ignoreNotBefore: false,
-        })
+        // const decode = await JWT.verify(token , process.env.JWT_SECRET ,{
+        //     complete: true,
+        //     algorithms: ['HS256'],
+        //     clockTolerance: 0,
+        //     ignoreExpiration: false,
+        //     ignoreNotBefore: false,
+        // })
 
-        let userId  = decode.payload.userId
+        // let userId  = decode.payload.userId
     
-        const findUser = await User.findById(userId)
+        // const findUser = await User.findById(userId)
 
-        if(!findUser) {
-            return res.status(404).json({
-                success : 'false',
-                message  : "user doesn't exist"  
-             })
-        }
+        // if(!findUser) {
+        //     return res.status(404).json({
+        //         success : 'false',
+        //         message  : "user doesn't exist"  
+        //      })
+        // }
         
        const { categoryCode , product_qty, ...rest } = req.body
        
@@ -76,14 +75,14 @@ export const save_design_to_cart  = async(req, res) => {
        }
 
        const save_design = await Design.create({
-         userId , 
+        //  userId , 
          categoryCode , 
          ...rest
        })
 
 
        const addTocart  = await Cart.create({
-        userId,
+        // userId,
         categoryId : findCategory._id,
         designId :  save_design._id,
         product_qty
@@ -93,6 +92,7 @@ export const save_design_to_cart  = async(req, res) => {
        return res.status(200).json({
         success: 'true',
         message : 'add to cart' ,
+        id : addTocart._id
        })
     }
     catch (error) {
@@ -107,26 +107,27 @@ export const save_design_to_cart  = async(req, res) => {
 
 // getCart 
 
+//change this
 export const getCartById = async(req,res) =>{
     try{
         const { cartId } = req.params
-        const { token } = req.query
+        // const { token } = req.query
         
-        const decode = await JWT.verify(token , process.env.JWT_SECRET ,{
-            complete: true,
-            algorithms: ['HS256'],
-            clockTolerance: 0,
-            ignoreExpiration: false,
-            ignoreNotBefore: false,
-        })
+        // const decode = await JWT.verify(token , process.env.JWT_SECRET ,{
+        //     complete: true,
+        //     algorithms: ['HS256'],
+        //     clockTolerance: 0,
+        //     ignoreExpiration: false,
+        //     ignoreNotBefore: false,
+        // })
 
-        let userId  = decode.payload.userId
+        // let userId  = decode.payload.userId
 
-        console.log(userId)
+        // console.log(userId)
         console.log(cartId)
-        console.log(token)
+        // console.log(token)
          
-        const getCart = await Cart.findOne({$and : [{userId},{_id : cartId}]}).populate('designId')
+        const getCart = await Cart.findOne({_id : cartId}).populate('designId')
 
         return res.status(200).json({
           success: 'true',
@@ -167,4 +168,55 @@ export const updateCart = async (req,res) =>{
             err,
         });
     }
+}
+export const getDesignById = async (req, res) =>{
+    const { designId } = req.params
+    const getDesign = await Design.findOne({_id : designId})
+
+    return res.status(200).json({
+      success: 'true',
+      message : 'getDesign' ,
+      data : getDesign
+   })
+}
+
+export const updateDesign = async (req,res) =>{
+    try{
+       const { designId } = req.params
+
+        const updateDesign = await Design.findOneAndUpdate({_id : designId}, {...req.body} , { runValidators : true})
+
+       return res.status(200).json({
+        success: 'true',
+        message : 'update design' ,
+        data : updateDesign
+     })
+    }
+    catch(err) {
+        return res.status(500).send({
+            success: false,
+            message: "Eror while saving design",
+            err,
+        });
+    }
+}
+
+export const getAllCart = async( req, res ) =>{
+    try{
+        const { carts } = req.body
+        const getCart = await Cart.find({_id : { $in : [...carts] }}).populate('designId')
+
+        return res.status(200).json({
+          success: 'true',
+          message : 'getCart',
+          data : getCart
+       })
+    }
+       catch(err) {
+        return res.status(500).send({
+            success: false,
+            message: "Eror while saving design",
+            err,
+        });
+    }  
 }
