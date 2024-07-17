@@ -43,10 +43,10 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState("");
 
-  const HandleClick = async (code) => {
-    try {
-      const { data } = await axios.post("/api/v1/auth/encrypt");
 
+  const HandleClick = async () => {
+    try {
+      const { data } = await axios.get("/api/v1/auth/encrypt");
       console.log(data, "encrypt data");
       setToken(data.token);
     } catch (error) {
@@ -54,6 +54,7 @@ const HomePage = () => {
     }
   };
 
+console.log(token)
   //get all cat
   const getAllCategory = async () => {
     try {
@@ -69,13 +70,14 @@ const HomePage = () => {
   useEffect(() => {
     getAllCategory();
     getTotal();
+    HandleClick()
   }, []);
   //get products
   const getAllProducts = async () => {
     try {
       setLoading(true);
       const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
-      console.log(data, "djbjdbfjbdjfbjdbj");
+      console.log(data, "product");
       setLoading(false);
       setProducts(data.products);
     } catch (error) {

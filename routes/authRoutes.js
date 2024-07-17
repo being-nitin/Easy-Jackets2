@@ -25,7 +25,7 @@ router.post("/login", loginController);
 
 router.post("/forgot-password", forgotPasswordController);
 
-router.post("/encrypt", requireSignin, encryptUser);
+router.get("/encrypt", requireSignin, encryptUser);
 
 router.get("/test", requireSignin, isAdmin, testController);
 

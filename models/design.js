@@ -9,7 +9,7 @@ const designSchema = new Schema(
       },
       userId : {
          type: mongoose.ObjectId,
-         required : true,
+        //  required : true,
          ref: 'user'
       },
       title: {
