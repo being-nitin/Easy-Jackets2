@@ -31,6 +31,12 @@ const ViewDetails = () => {
   return (
     <Layout>
       <div className="row container product-details py-5">
+        <div className="col-md-6 d-flex justify-content-center align-items-center">
+          <div className="product-img-container">
+            <img src={""} className="product-img" alt={""} />
+            <div className="product-img-overlay"></div>
+          </div>
+        </div>
         <div className="col-md-6 product-details-info text-start">
           <h1 className="text-center mb-4 display-4">Design Details</h1>
           <hr className="mb-4" />

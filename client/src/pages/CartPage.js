@@ -121,7 +121,12 @@ const CartPage = () => {
                     >
                       Remove
                     </button>
-                    <button className="btn btn-primary">View Details</button>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => navigate(`/Design`)}
+                    >
+                      View Details
+                    </button>
                   </div>
                 </div>
               ))}
