@@ -112,7 +112,7 @@ const CartPage = () => {
                   <div className="col-md-4">
                     <p>{p.name}</p>
                     <p>{p.description.substring(0, 30)}</p>
-                    <p>Price : {p.price}</p>
+                    <p>Price : {p.price}$</p>
                   </div>
                   <div className="col-md-4 cart-remove-btn">
                     <button
@@ -121,6 +121,7 @@ const CartPage = () => {
                     >
                       Remove
                     </button>
+                    <button className="btn btn-primary">View Details</button>
                   </div>
                 </div>
               ))}

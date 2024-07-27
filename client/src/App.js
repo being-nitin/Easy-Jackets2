@@ -29,6 +29,8 @@ import CategoryProduct from "./pages/CategoryProduct.js";
 import CartPage from "./pages/CartPage.js";
 import AdminOrders from "./pages/Admin/AdminOrders";
 import OurWork from "./pages/OurWork.js";
+import AllProducts from "./pages/AllProducts.js";
+import ViewDetails from "./pages/ViewDetails.js";
 // import webpackConfig from "./webpack.config.js";
 
 function App() {
@@ -41,6 +43,8 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/category/:slug" element={<CategoryProduct />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/AllProducts" element={<AllProducts />} />
+        <Route path="/Design" element={<ViewDetails />} />
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<Dashboard />} />
           <Route path="user/orders" element={<Orders />} />

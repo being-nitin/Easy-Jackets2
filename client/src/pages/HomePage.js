@@ -23,6 +23,7 @@ import Quality from "../../src/pages/images/quality.png";
 import Cor1 from "../../src/pages/images/cor1.png";
 import Cor2 from "../../src/pages/images/cor2.png";
 import Cor3 from "../../src/pages/images/cor3.png";
+import varsity from "../../src/pages/images/varsity-jacket .png";
 
 // import Review1 from "../../src/pages/images/review2.png";
 // import Review2 from "../../src/pages/images/review3.png";
@@ -31,6 +32,11 @@ import Re1 from "../../src/pages/images/re1.png";
 import Re2 from "../../src/pages/images/re2.png";
 import Re3 from "../../src/pages/images/re3.png";
 import SideImage from "../../src/pages/images/side-image.png";
+import CartImage from "../../src/pages/images/cart-fill.svg";
+import BombJack from "../../src/pages/images/bombjack.png";
+import VarsJack from "../../src/pages/images/varsjack.png";
+import NorthHood from "../../src/pages/images/northhood.png";
+import ReadyToShip from "../../src/pages/images/readytoship.png";
 const HomePage = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useCart();
@@ -42,7 +48,7 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState("");
-
+  const [showInfo, setShowInfo] = useState(false);
 
   const HandleClick = async () => {
     try {
@@ -51,10 +57,11 @@ const HomePage = () => {
       setToken(data.token);
     } catch (error) {
       console.log(error);
+      // The encrypt Data...
     }
   };
 
-console.log(token)
+  console.log(token);
   //get all cat
   const getAllCategory = async () => {
     try {
@@ -70,7 +77,7 @@ console.log(token)
   useEffect(() => {
     getAllCategory();
     getTotal();
-    HandleClick()
+    HandleClick();
   }, []);
   //get products
   const getAllProducts = async () => {
@@ -362,7 +369,149 @@ console.log(token)
               />
             </div>
           </div>
-          <h3 className="text-center mt-5 fw-bold">Customize Here</h3>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            alignItems: "cIenter",
+          }}
+        >
+          <div className="image-container">
+            <img src={varsity} alt="banner image" className="main-image" />
+            <img
+              src={CartImage}
+              alt="small image"
+              className="small-image"
+              onMouseEnter={() => setShowInfo(true)}
+              onMouseLeave={() => setShowInfo(false)}
+            />
+            {showInfo && (
+              <div className="info-box">
+                <p
+                  style={{
+                    fontWeight: "700",
+                  }}
+                >
+                  BLACK VARSITY JACKET
+                </p>
+                <ul>
+                  <p>Varsity Jackets |</p>
+                  <p>Wool & Leather Varsity Jackets</p>
+                  <p
+                    style={{
+                      marginBottom: 0,
+                      fontWeight: "700",
+                      fontSize: "larger",
+                    }}
+                  >
+                    From $80.00
+                  </p>
+                </ul>
+              </div>
+            )}
+          </div>
+
+          <div
+            style={{
+              width: "60%",
+            }}
+          >
+            <p>CLASSIC STYLE MEETS DURABILITY</p>
+            <h1>
+              THE WOOL AND
+              <br />
+              LEATHER VARSITY JACKET
+            </h1>
+            <p
+              style={{
+                width: "50%",
+              }}
+            >
+              Embrace timeless elegance and rugged quality with our Wool and
+              Leather varsity jacket. Crafted from premium materials, this
+              jacket combines the warmth of wool with the durability of leather.
+              Stay stylish in any season, whether you're heading to the game or
+              out for a night on the town. A perfect blend of comfort, style,
+              and versatility, this jacket is a must-have for fashion-forward
+              individuals.
+            </p>
+          </div>
+        </div>
+
+        <div
+          className="parent-container"
+          style={{
+            width: "100%",
+          }}
+        >
+          <div
+            className="banner-container d-flex justify-content-center align-items-center"
+            style={{
+              width: "100%",
+              marginBottom: "30px",
+            }}
+          >
+            <div
+              style={{
+                width: "150%",
+                textAlign: "center",
+              }}
+            >
+              <p>CUSTOMIZED VARSITY JACKETS</p>
+              <h1>WEAR YOUR STYLE WITH PRIDE!</h1>
+              <p
+                style={{
+                  width: "100%",
+                }}
+              >
+                Design your own unique varsity jacket and stand out from the
+                crowd. Our customization options allow you to showcase your
+                personal style and make a statement. From choosing the colors
+                and materials to adding patches, embroidery, and personalized
+                lettering, we'll bring your vision to life. Whether you're
+                representing your school, team, or personal brand, our custom
+                varsity jackets are the perfect canvas for self-expression. Wear
+                your style with pride and create a jacket that's truly
+                one-of-a-kind. Start designing your custom varsity jacket today!
+              </p>
+              <span
+                style={{
+                  border: "0.5px solid black",
+                  padding: "10px",
+                  backgroundColor: "white",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+                onMouseOver={(e) => (e.currentTarget.style.border = "none")}
+                onMouseOut={(e) =>
+                  (e.currentTarget.style.border = "0.5px solid black")
+                }
+                onClick={() => navigate(`/AllProducts`)}
+              >
+                Customize Your Jacket
+              </span>
+            </div>
+
+            <img
+              style={{
+                cursor: "pointer",
+                transition: "transform 0.3s ease",
+                margin: "10px",
+                border: "1px solid #ddd",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
+              src={ReadyToShip}
+              className="banner-img img-fluid"
+              alt="banner image"
+              // onMouseOver={(e) =>
+              //   (e.currentTarget.style.transform = "scale(1.05)")
+              // }
+              // onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            />
+          </div>
         </div>
 
         <div
@@ -514,6 +663,79 @@ console.log(token)
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className=""
+          style={{
+            width: "100%",
+          }}
+        >
+          <div
+            className="banner-container d-flex justify-content-center align-items-center"
+            style={{
+              width: "100%",
+              marginTop: "10%",
+            }}
+          >
+            <div className="">
+              <p
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                RUNNING WORLD
+              </p>
+              <h1>EXPLORE THE RANGE</h1>
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              height: "100%",
+              Width: "100%",
+            }}
+          >
+            <div className="image-container">
+              <img src={BombJack} alt="Review 3" className="hover-image" />
+              <div
+                style={{
+                  background: "white",
+                  color: "black",
+                }}
+                className="hover-box"
+                onClick={() => navigate(`/category/bomber-jackets`)}
+              >
+                EXPLORE COLLECTION
+              </div>
+            </div>
+            <div className="image-container">
+              <img src={VarsJack} alt="Review 3" className="hover-image" />
+              <div
+                style={{
+                  background: "white",
+                  color: "black",
+                }}
+                className="hover-box"
+                onClick={() => navigate(`/category/varsity-jackets`)}
+              >
+                EXPLORE COLLECTION
+              </div>
+            </div>
+            <div className="image-container">
+              <img src={NorthHood} alt="Review 3" className="hover-image" />
+              <div
+                style={{
+                  background: "white",
+                  color: "black",
+                }}
+                className="hover-box"
+                onClick={() => navigate(`/category/hoodies`)}
+              >
+                EXPLORE COLLECTION
               </div>
             </div>
           </div>

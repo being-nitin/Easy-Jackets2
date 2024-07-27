@@ -7,6 +7,8 @@ import useCategory from "../../hooks/useCategory";
 import { useCart } from "../../context/Cart";
 import { Badge } from "antd";
 import logoMain from "../../pages/images/Header-logo.png";
+import "../../styles/Homepage.css";
+
 const Header = () => {
   const [auth, setAuth] = useAuth();
   const [cart] = useCart();
@@ -48,14 +50,14 @@ const Header = () => {
             </Link>
             <div className="mx-auto">
               <ul className="navbar-nav mb-2 mb-lg-0">
-                {/* <SearchInput /> */}
                 <li className="nav-item">
-                  <NavLink
-                    to="/"
-                    className="nav-link text-dark"
-                    style={{ fontWeight: "1500" }}
-                  >
+                  <NavLink to="/" className="nav-link text-dark">
                     Home
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/AllProducts" className="nav-link text-dark">
+                    Products
                   </NavLink>
                 </li>
                 <li className="nav-item dropdown">
@@ -63,7 +65,6 @@ const Header = () => {
                     className="nav-link dropdown-toggle text-dark"
                     to="/categories"
                     data-bs-toggle="dropdown"
-                    style={{ fontWeight: "bold" }}
                   >
                     Categories
                   </Link>
@@ -72,7 +73,6 @@ const Header = () => {
                       <Link
                         className="dropdown-item text-dark"
                         to="/categories"
-                        style={{ fontWeight: "bold" }}
                       >
                         All Categories
                       </Link>
@@ -82,7 +82,6 @@ const Header = () => {
                         <Link
                           className="dropdown-item text-dark"
                           to={`/category/${c.slug}`}
-                          style={{ fontWeight: "bold" }}
                         >
                           {c.name}
                         </Link>
@@ -90,97 +89,64 @@ const Header = () => {
                     ))}
                   </ul>
                 </li>
-
-                {!auth?.user ? (
-                  <>
-                    <li className="nav-item">
-                      <NavLink
-                        to="/register"
-                        className="nav-link text-dark"
-                        style={{ fontWeight: "bold" }}
-                      >
-                        Register
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink
-                        to="/login"
-                        className="nav-link text-dark"
-                        style={{ fontWeight: "bold" }}
-                      >
-                        Login
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink
-                        to="/contact"
-                        className="nav-link text-dark"
-                        style={{ fontWeight: "bold" }}
-                      >
-                        Contact us
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink
-                        to="/about"
-                        className="nav-link text-dark"
-                        style={{ fontWeight: "bold" }}
-                      >
-                        About us
-                      </NavLink>
-                    </li>
-                  </>
-                ) : (
-                  <>
-                    <li className="nav-item dropdown">
-                      <NavLink
-                        className="nav-link dropdown-toggle text-dark"
-                        to="#"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        style={{ border: "none", fontWeight: "bold" }}
-                      >
-                        {auth?.user?.name}
-                      </NavLink>
-                      <ul className="dropdown-menu bg-white">
-                        <li>
-                          <NavLink
-                            to={`/dashboard/${
-                              auth?.user?.role === 1 ? "admin" : "user"
-                            }`}
-                            className="dropdown-item text-dark"
-                            style={{ fontWeight: "bold" }}
-                          >
-                            Dashboard
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink
-                            onClick={handleLogout}
-                            to="/login"
-                            className="dropdown-item text-dark"
-                            style={{ fontWeight: "bold" }}
-                          >
-                            Logout
-                          </NavLink>
-                        </li>
-                      </ul>
-                    </li>
-                  </>
-                )}
-                <li className="nav-item">
-                  <Badge count={cart?.length} showZero>
+                {auth?.user && (
+                  <li className="nav-item dropdown">
                     <NavLink
-                      to="/cart"
-                      className="nav-link text-dark"
-                      style={{ fontWeight: "bold" }}
+                      className="nav-link dropdown-toggle text-dark"
+                      to="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
                     >
-                      Cart
+                      {auth?.user?.name}
                     </NavLink>
-                  </Badge>
-                </li>
+                    <ul className="dropdown-menu bg-white">
+                      <li>
+                        <NavLink
+                          to={`/dashboard/${
+                            auth?.user?.role === 1 ? "admin" : "user"
+                          }`}
+                          className="dropdown-item text-dark"
+                        >
+                          Dashboard
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          onClick={handleLogout}
+                          to="/login"
+                          className="dropdown-item text-dark"
+                        >
+                          Logout
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </li>
+                )}
               </ul>
             </div>
+            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              {!auth?.user ? (
+                <>
+                  <li className="nav-item">
+                    <NavLink to="/register" className="nav-link text-dark">
+                      Register
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink to="/login" className="nav-link text-dark">
+                      Login
+                    </NavLink>
+                  </li>
+                </>
+              ) : null}
+              <li className="nav-item">
+                <Badge count={cart?.length} showZero>
+                  <NavLink to="/cart" className="nav-link text-dark">
+                    Cart
+                  </NavLink>
+                </Badge>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
