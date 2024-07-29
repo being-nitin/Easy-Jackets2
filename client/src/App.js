@@ -44,7 +44,7 @@ function App() {
         <Route path="/category/:slug" element={<CategoryProduct />} />
         <Route path="/search" element={<Search />} />
         <Route path="/AllProducts" element={<AllProducts />} />
-        <Route path="/Design" element={<ViewDetails />} />
+        <Route path="/Design/:id" element={<ViewDetails />} />
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<Dashboard />} />
           <Route path="user/orders" element={<Orders />} />

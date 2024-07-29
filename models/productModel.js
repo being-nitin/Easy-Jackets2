@@ -18,6 +18,11 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    designId :{ 
+       type : mongoose.ObjectId,
+       ref :'design',
+       required : true 
+    },
     category: {
       type: mongoose.ObjectId,
       ref: "Category",

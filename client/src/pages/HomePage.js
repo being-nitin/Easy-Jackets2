@@ -178,7 +178,7 @@ const HomePage = () => {
             >
               Top Products
             </h1>
-            <div className="row justify-content-center">
+            <div style= {{ display :'flex' , gap: '90px',width : '100%'}}>
               {products?.map((p) => (
                 <div key={p._id} className="col-md-4 col-lg-3 mb-4">
                   <div
@@ -220,7 +220,7 @@ const HomePage = () => {
                           onClick={() => HandleClick(p.category.code)}
                         >
                           <a
-                            href={`https://jacket-ecomm.vercel.app/?id=${p.category.code}&token=${token}`}
+                            href={`https://jacket-ecomm.vercel.app/?id=${p.category.code}&design=${p.designId}`}
                             className="text-light"
                             style={{ textDecoration: "none" }}
                           >

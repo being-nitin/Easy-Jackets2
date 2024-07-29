@@ -107,7 +107,7 @@ const ProductDetails = () => {
             }}
           >
             <a
-              href={`https://jacket-ecomm.vercel.app/?id=${product?.category?.code}`}
+              href={`https://jacket-ecomm.vercel.app/?id=${product?.category?.code}&design=${product?.designId}`}
               target="_blank"
               style={{
                 textDecoration: "none",

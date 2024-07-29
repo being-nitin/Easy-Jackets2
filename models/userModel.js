@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
@@ -32,6 +32,11 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+
+    cart : [{
+       type : mongoose.ObjectId,
+       ref : 'cart'
+    }]
   },
   {
     timestamps: true,
