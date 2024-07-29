@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../components/layout/Layout";
 import { useCart } from "../context/Cart";
 import { useAuth } from "../context/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , useSearchParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import DropIn from "braintree-web-drop-in-react";
@@ -11,6 +11,8 @@ import "../styles/CartStyles.css";
 const CartPage = () => {
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
+  const [cartData , setCartData ] = useState([])
+  const [searchParams, setSearchParams] = useSearchParams();
   const [clientToken, setClientToken] = useState("");
   const [instance, setInstance] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,6 +33,17 @@ const CartPage = () => {
       console.log(error);
     }
   };
+
+  const getCarts = async() => {
+      try {
+        const index = searchParams.get("index").split(',')
+        const { data } = await axios.post('/api/v1/custom/getAllCart', { carts : [...index]})
+        console.log(data.data)
+        setCartData(data.data)
+      } catch (error) {
+        console.log(error);
+      }
+  }
   //detele item
   const removeCartItem = (pid) => {
     try {
@@ -76,6 +89,10 @@ const CartPage = () => {
     }
   };
 
+  useEffect(() =>{
+      getCarts()
+  },[])
+
   return (
     <Layout>
       <div className=" cart-page">
@@ -86,8 +103,8 @@ const CartPage = () => {
                 ? "Hello Guest"
                 : `Hello  ${auth?.token && auth?.user?.name}`}
               <p className="text-center">
-                {cart?.length
-                  ? `You Have ${cart.length} items in your cart ${
+                {cartData?.length
+                  ? `You Have ${cartData.length} items in your cart ${
                       auth?.token ? "" : "please login to checkout !"
                     }`
                   : " Your Cart Is Empty"}
@@ -98,11 +115,11 @@ const CartPage = () => {
         <div className="container ">
           <div className="row ">
             <div className="col-md-7  p-0 m-0">
-              {cart?.map((p) => (
+              {cartData?.map((p) => (
                 <div className="row card flex-row" key={p._id}>
                   <div className="col-md-4">
                     <img
-                      src={`/api/v1/product/product-photo/${p._id}`}
+                      src={`${p.designId.custom_image}`}
                       className="card-img-top"
                       alt={p.name}
                       width="100%"
@@ -110,9 +127,9 @@ const CartPage = () => {
                     />
                   </div>
                   <div className="col-md-4">
-                    <p>{p.name}</p>
-                    <p>{p.description.substring(0, 30)}</p>
-                    <p>Price : {p.price}$</p>
+                    <p>{p.designId.globals.catName}</p>
+                    <p>{p.designId.materials.body}</p>
+                    <p>Price : {p.designId.custom_price}$</p>
                   </div>
                   <div className="col-md-4 cart-remove-btn">
                     <button
@@ -123,7 +140,7 @@ const CartPage = () => {
                     </button>
                     <button
                       className="btn btn-primary"
-                      onClick={() => navigate(`/Design`)}
+                      onClick={() => navigate(`/Design/${p.designId._id}`)}
                     >
                       View Details
                     </button>

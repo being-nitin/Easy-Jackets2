@@ -11,12 +11,11 @@ const ViewDetails = () => {
   const [product, setProduct] = useState({});
   const [cart, setCart] = useCart();
 
-  useEffect(() => {
-    getProduct();
-  }, []);
+ 
   const getProduct = async () => {
     try {
-      // const { data } = await axios
+      const { data } = await axios.get(`/api/v1/custom/getDesign/${params.id}`)
+     setProduct(data.data)
       // .get
       // `/api/v1/product/get-product/${params.slug}` api for getting designs
       // ();
@@ -28,12 +27,16 @@ const ViewDetails = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    getProduct();
+  }, []);
   return (
     <Layout>
       <div className="row container product-details py-5">
         <div className="col-md-6 d-flex justify-content-center align-items-center">
           <div className="product-img-container">
-            <img src={""} className="product-img" alt={""} />
+            <img src={product?.custom_image} className="product-img" alt={""} />
             <div className="product-img-overlay"></div>
           </div>
         </div>
@@ -41,7 +44,7 @@ const ViewDetails = () => {
           <h1 className="text-center mb-4 display-4">Design Details</h1>
           <hr className="mb-4" />
           <h5 className="mb-3">
-            <strong>Name:</strong> {product.name}
+            <strong>Name:</strong> {product.globals?.catName}
           </h5>
           <p className="mb-3">
             <strong>Description:</strong>
