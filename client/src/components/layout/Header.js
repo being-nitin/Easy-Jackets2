@@ -39,39 +39,35 @@ const Header = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <Link to="/" className="navbar-brand">
-              <img
-                src={logoMain}
-                alt="Logo"
-                style={{
-                  width: "60px",
-                  background: "white",
-                }}
-              />
+              <img src={logoMain} alt="Logo" className="navbar-logo" />
             </Link>
             <div className="mx-auto">
               <ul className="navbar-nav mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <NavLink to="/" className="nav-link text-dark">
+                  <NavLink to="/" className="nav-link custom-nav-link">
                     Home
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to="/AllProducts" className="nav-link text-dark">
+                  <NavLink
+                    to="/AllProducts"
+                    className="nav-link custom-nav-link"
+                  >
                     Products
                   </NavLink>
                 </li>
                 <li className="nav-item dropdown">
                   <Link
-                    className="nav-link dropdown-toggle text-dark"
+                    className="nav-link dropdown-toggle custom-nav-link"
                     to="/categories"
                     data-bs-toggle="dropdown"
                   >
                     Categories
                   </Link>
-                  <ul className="dropdown-menu bg-white">
+                  <ul className="dropdown-menu custom-dropdown-menu">
                     <li>
                       <Link
-                        className="dropdown-item text-dark"
+                        className="dropdown-item custom-dropdown-item"
                         to="/categories"
                       >
                         All Categories
@@ -80,7 +76,7 @@ const Header = () => {
                     {categories?.map((c) => (
                       <li key={c.slug}>
                         <Link
-                          className="dropdown-item text-dark"
+                          className="dropdown-item custom-dropdown-item"
                           to={`/category/${c.slug}`}
                         >
                           {c.name}
@@ -92,20 +88,20 @@ const Header = () => {
                 {auth?.user && (
                   <li className="nav-item dropdown">
                     <NavLink
-                      className="nav-link dropdown-toggle text-dark"
+                      className="nav-link dropdown-toggle custom-nav-link"
                       to="#"
                       role="button"
                       data-bs-toggle="dropdown"
                     >
                       {auth?.user?.name}
                     </NavLink>
-                    <ul className="dropdown-menu bg-white">
+                    <ul className="dropdown-menu custom-dropdown-menu">
                       <li>
                         <NavLink
                           to={`/dashboard/${
                             auth?.user?.role === 1 ? "admin" : "user"
                           }`}
-                          className="dropdown-item text-dark"
+                          className="dropdown-item custom-dropdown-item"
                         >
                           Dashboard
                         </NavLink>
@@ -114,7 +110,7 @@ const Header = () => {
                         <NavLink
                           onClick={handleLogout}
                           to="/login"
-                          className="dropdown-item text-dark"
+                          className="dropdown-item custom-dropdown-item"
                         >
                           Logout
                         </NavLink>
@@ -128,12 +124,15 @@ const Header = () => {
               {!auth?.user ? (
                 <>
                   <li className="nav-item">
-                    <NavLink to="/register" className="nav-link text-dark">
+                    <NavLink
+                      to="/register"
+                      className="nav-link custom-nav-link"
+                    >
                       Register
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/login" className="nav-link text-dark">
+                    <NavLink to="/login" className="nav-link custom-nav-link">
                       Login
                     </NavLink>
                   </li>
@@ -141,7 +140,7 @@ const Header = () => {
               ) : null}
               <li className="nav-item">
                 <Badge count={cart?.length} showZero>
-                  <NavLink to="/cart" className="nav-link text-dark">
+                  <NavLink to="/cart" className="nav-link custom-nav-link">
                     Cart
                   </NavLink>
                 </Badge>
