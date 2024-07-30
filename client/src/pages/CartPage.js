@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../components/layout/Layout";
 import { useCart } from "../context/Cart";
 import { useAuth } from "../context/auth";
-import { useNavigate , useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import DropIn from "braintree-web-drop-in-react";
@@ -11,7 +11,7 @@ import "../styles/CartStyles.css";
 const CartPage = () => {
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
-  const [cartData , setCartData ] = useState([])
+  const [cartData, setCartData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [clientToken, setClientToken] = useState("");
   const [instance, setInstance] = useState("");
@@ -34,16 +34,18 @@ const CartPage = () => {
     }
   };
 
-  const getCarts = async() => {
-      try {
-        const index = searchParams.get("index").split(',')
-        const { data } = await axios.post('/api/v1/custom/getAllCart', { carts : [...index]})
-        console.log(data.data)
-        setCartData(data.data)
-      } catch (error) {
-        console.log(error);
-      }
-  }
+  const getCarts = async () => {
+    try {
+      const index = searchParams.get("index").split(",");
+      const { data } = await axios.post("/api/v1/custom/getAllCart", {
+        carts: [...index],
+      });
+      console.log(data.data);
+      setCartData(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   //detele item
   const removeCartItem = (pid) => {
     try {
@@ -89,9 +91,9 @@ const CartPage = () => {
     }
   };
 
-  useEffect(() =>{
-      getCarts()
-  },[])
+  useEffect(() => {
+    getCarts();
+  }, []);
 
   return (
     <Layout>

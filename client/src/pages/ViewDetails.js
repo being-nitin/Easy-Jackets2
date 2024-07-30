@@ -11,11 +11,10 @@ const ViewDetails = () => {
   const [product, setProduct] = useState({});
   const [cart, setCart] = useCart();
 
- 
   const getProduct = async () => {
     try {
-      const { data } = await axios.get(`/api/v1/custom/getDesign/${params.id}`)
-     setProduct(data.data)
+      const { data } = await axios.get(`/api/v1/custom/getDesign/${params.id}`);
+      setProduct(data.data);
       // .get
       // `/api/v1/product/get-product/${params.slug}` api for getting designs
       // ();
@@ -31,6 +30,7 @@ const ViewDetails = () => {
   useEffect(() => {
     getProduct();
   }, []);
+  console.log(product, "product is here ");
   return (
     <Layout>
       <div className="row container product-details py-5">
@@ -62,14 +62,24 @@ const ViewDetails = () => {
             {""}
           </p>
           <button
-            className="btn btn-primary btn-lg w-100"
+            className="btn btn-primary btn-lg w-10"
             // onClick={() => {
             //   setCart([...cart, product]);
             //   localStorage.setItem("cart", JSON.stringify([...cart, product]));
             //   toast.success("Item Added to cart");
             // }}
           >
-            ""
+            Share
+          </button>
+          <button
+            style={{
+              marginTop: "5px",
+              backgroundColor: "grey",
+              color: "white",
+            }}
+            className="btn btn-lg w-10"
+          >
+            Edit
           </button>
         </div>
       </div>
