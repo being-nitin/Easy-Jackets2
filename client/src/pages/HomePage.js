@@ -178,7 +178,7 @@ const HomePage = () => {
             >
               Top Products
             </h1>
-            <div style= {{ display :'flex' , gap: '90px',width : '100%'}}>
+            <div style={{ display: "flex", gap: "90px", width: "100%" }}>
               {products?.map((p) => (
                 <div key={p._id} className="col-md-4 col-lg-3 mb-4">
                   <div
@@ -254,24 +254,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="parent-container">
-          <div className="banner-container d-flex justify-content-center align-items-center">
-            <div className="banner-content d-flex justify-content-center align-items-center">
-              <img
-                src={ImageEasy}
-                className="banner-img img-fluid"
-                alt="banner image"
-              />
-            </div>
-          </div>
-          <div className="banner-container d-flex justify-content-around align-items-center my-4">
-            <img src={Logo1} className="logo-img" alt="Logo 1" />
-            <img src={Logo2} className="logo-img" alt="Logo 2" />
-            <img src={Logo3} className="logo-img" alt="Logo 3" />
-            <img src={Logo4} className="logo-img" alt="Logo 4" />
-            <img src={Logo5} className="logo-img" alt="Logo 5" />
-          </div>
-        </div>
+
         <div className="d-flex flex-column flex-md-row justify-content-center align-items-center mb-5">
           <img
             src={SocialBanner}
@@ -370,7 +353,6 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-
         <div
           style={{
             display: "flex",
@@ -440,7 +422,6 @@ const HomePage = () => {
             </p>
           </div>
         </div>
-
         <div
           className="parent-container"
           style={{
@@ -513,7 +494,6 @@ const HomePage = () => {
             />
           </div>
         </div>
-
         <div
           className="parent-container"
           style={{
@@ -561,7 +541,6 @@ const HomePage = () => {
             />
           </div>
         </div>
-
         <div
           className="parent-container"
           style={{
@@ -667,7 +646,6 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-
         <div
           className=""
           style={{

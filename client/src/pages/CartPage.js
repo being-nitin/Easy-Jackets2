@@ -114,28 +114,28 @@ const CartPage = () => {
             </h1>
           </div>
         </div>
-        <div className="container ">
-          <div className="row ">
-            <div className="col-md-7  p-0 m-0">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-7 col-md-12 p-0 m-0">
               {cartData?.map((p) => (
-                <div className="row card flex-row" key={p._id}>
-                  <div className="col-md-4">
+                <div className="row card flex-row mb-3" key={p._id}>
+                  <div className="col-md-4 col-6">
                     <img
                       src={`${p.designId.custom_image}`}
                       className="card-img-top"
                       alt={p.name}
                       width="100%"
-                      height={"130px"}
+                      height="130px"
                     />
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-4 col-6">
                     <p>{p.designId.globals.catName}</p>
                     <p>{p.designId.materials.body}</p>
-                    <p>Price : {p.designId.custom_price}$</p>
+                    <p>Price: {p.designId.custom_price}$</p>
                   </div>
-                  <div className="col-md-4 cart-remove-btn">
+                  <div className="col-md-4 col-12 mt-3 mt-md-0 d-flex flex-column">
                     <button
-                      className="btn btn-danger"
+                      className="btn btn-danger mb-2"
                       onClick={() => removeCartItem(p._id)}
                     >
                       Remove
@@ -150,24 +150,22 @@ const CartPage = () => {
                 </div>
               ))}
             </div>
-            <div className="col-md-5 cart-summary ">
+            <div className="col-lg-5 col-md-12 cart-summary">
               <h2>Cart Summary</h2>
               <p>Total | Checkout | Payment</p>
               <hr />
-              <h4>Total : {totalPrice()} </h4>
+              <h4>Total: {totalPrice()}</h4>
               {auth?.user?.address ? (
-                <>
-                  <div className="mb-3">
-                    <h4>Current Address</h4>
-                    <h5>{auth?.user?.address}</h5>
-                    <button
-                      className="btn btn-outline-warning"
-                      onClick={() => navigate("/dashboard/user/profile")}
-                    >
-                      Update Address
-                    </button>
-                  </div>
-                </>
+                <div className="mb-3">
+                  <h4>Current Address</h4>
+                  <h5>{auth?.user?.address}</h5>
+                  <button
+                    className="btn btn-outline-warning"
+                    onClick={() => navigate("/dashboard/user/profile")}
+                  >
+                    Update Address
+                  </button>
+                </div>
               ) : (
                 <div className="mb-3">
                   {auth?.token ? (
@@ -180,19 +178,15 @@ const CartPage = () => {
                   ) : (
                     <button
                       className="btn btn-outline-warning"
-                      onClick={() =>
-                        navigate("/login", {
-                          state: "/cart",
-                        })
-                      }
+                      onClick={() => navigate("/login", { state: "/cart" })}
                     >
-                      Plase Login to checkout
+                      Please Login to checkout
                     </button>
                   )}
                 </div>
               )}
               <div className="mt-2">
-                {!clientToken || !auth?.token || !cart?.length ? (
+                {!clientToken || !auth?.token || !cartData?.length ? (
                   ""
                 ) : (
                   <>
@@ -205,7 +199,6 @@ const CartPage = () => {
                       }}
                       onInstance={(instance) => setInstance(instance)}
                     />
-
                     <button
                       className="btn btn-primary"
                       onClick={handlePayment}
