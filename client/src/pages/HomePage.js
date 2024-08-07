@@ -178,12 +178,15 @@ const HomePage = () => {
             >
               Top Products
             </h1>
-            <div style={{ display: "flex", gap: "90px", width: "100%" }}>
+            <div className="row g-3">
               {products?.map((p) => (
-                <div key={p._id} className="col-md-4 col-lg-3 mb-4">
+                <div key={p._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
                   <div
                     className="card h-100 shadow-sm"
-                    style={{ transition: "transform 0.3s ease" }}
+                    style={{
+                      transition: "transform 0.3s ease",
+                      maxWidth: "100%",
+                    }}
                   >
                     <img
                       src={`/api/v1/product/product-photo/${p._id}`}
@@ -210,6 +213,9 @@ const HomePage = () => {
                       </p>
                       <div className="mt-auto d-flex justify-content-between">
                         <button
+                          style={{
+                            maxWidth: "60%",
+                          }}
                           className="btn btn-info me-2"
                           onClick={() => navigate(`/product/${p.slug}`)}
                         >
@@ -353,101 +359,81 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "100%",
-            alignItems: "cIenter",
-          }}
-        >
-          <div className="image-container">
-            <img src={varsity} alt="banner image" className="main-image" />
-            <img
-              src={CartImage}
-              alt="small image"
-              className="small-image"
-              onMouseEnter={() => setShowInfo(true)}
-              onMouseLeave={() => setShowInfo(false)}
-            />
-            {showInfo && (
-              <div className="info-box">
-                <p
-                  style={{
-                    fontWeight: "700",
-                  }}
-                >
-                  BLACK VARSITY JACKET
-                </p>
-                <ul>
-                  <p>Varsity Jackets |</p>
-                  <p>Wool & Leather Varsity Jackets</p>
-                  <p
-                    style={{
-                      marginBottom: 0,
-                      fontWeight: "700",
-                      fontSize: "larger",
-                    }}
+        <div className="container-fluid">
+          <div className="row align-items-center">
+            <div className="col-12 col-md-6 d-flex justify-content-center">
+              <div className="image-container position-relative">
+                <img
+                  src={varsity}
+                  alt="banner image"
+                  className="main-image img-fluid"
+                  style={{ maxWidth: "80%" }} // Adjust the max-width as needed
+                />
+                <img
+                  src={CartImage}
+                  alt="small image"
+                  className="small-image position-absolute"
+                  style={{ top: "20px", right: "90px", width: "4%" }} // Adjust width and positioning as needed
+                  onMouseEnter={() => setShowInfo(true)}
+                  onMouseLeave={() => setShowInfo(false)}
+                />
+                {showInfo && (
+                  <div
+                    className="info-box position-absolute"
+                    style={{ top: "50px", right: "20px" }}
                   >
-                    From $80.00
-                  </p>
-                </ul>
+                    {" "}
+                    {/* Adjust positioning as needed */}
+                    <p
+                      style={{
+                        fontWeight: "700",
+                      }}
+                    >
+                      BLACK VARSITY JACKET
+                    </p>
+                    <ul>
+                      <p>Varsity Jackets |</p>
+                      <p>Wool & Leather Varsity Jackets</p>
+                      <p
+                        style={{
+                          marginBottom: 0,
+                          fontWeight: "700",
+                          fontSize: "larger",
+                        }}
+                      >
+                        From $80.00
+                      </p>
+                    </ul>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-
-          <div
-            style={{
-              width: "60%",
-            }}
-          >
-            <p>CLASSIC STYLE MEETS DURABILITY</p>
-            <h1>
-              THE WOOL AND
-              <br />
-              LEATHER VARSITY JACKET
-            </h1>
-            <p
-              style={{
-                width: "50%",
-              }}
-            >
-              Embrace timeless elegance and rugged quality with our Wool and
-              Leather varsity jacket. Crafted from premium materials, this
-              jacket combines the warmth of wool with the durability of leather.
-              Stay stylish in any season, whether you're heading to the game or
-              out for a night on the town. A perfect blend of comfort, style,
-              and versatility, this jacket is a must-have for fashion-forward
-              individuals.
-            </p>
+            </div>
+            <div className="col-12 col-md-6 mt-4 mt-md-0">
+              <p className="text-uppercase">Classic Style Meets Durability</p>
+              <h1>
+                The Wool and
+                <br />
+                Leather Varsity Jacket
+              </h1>
+              <p className="w-75">
+                Embrace timeless elegance and rugged quality with our Wool and
+                Leather varsity jacket. Crafted from premium materials, this
+                jacket combines the warmth of wool with the durability of
+                leather. Stay stylish in any season, whether you're heading to
+                the game or out for a night on the town. A perfect blend of
+                comfort, style, and versatility, this jacket is a must-have for
+                fashion-forward individuals.
+              </p>
+            </div>
           </div>
         </div>
-        <div
-          className="parent-container"
-          style={{
-            width: "100%",
-          }}
-        >
-          <div
-            className="banner-container d-flex justify-content-center align-items-center"
-            style={{
-              width: "100%",
-              marginBottom: "30px",
-            }}
-          >
-            <div
-              style={{
-                width: "150%",
-                textAlign: "center",
-              }}
-            >
-              <p>CUSTOMIZED VARSITY JACKETS</p>
-              <h1>WEAR YOUR STYLE WITH PRIDE!</h1>
-              <p
-                style={{
-                  width: "100%",
-                }}
-              >
+
+        <div className="container-fluid">
+          <div className="row align-items-center">
+            <div className="col-12 col-md-6 text-center mb-4 mb-md-0">
+              <p className="text-uppercase">Customized Varsity Jackets</p>
+              <h1>Wear Your Style With Pride!</h1>
+              <p className="mx-auto" style={{ maxWidth: "90%" }}>
                 Design your own unique varsity jacket and stand out from the
                 crowd. Our customization options allow you to showcase your
                 personal style and make a statement. From choosing the colors
@@ -458,42 +444,32 @@ const HomePage = () => {
                 your style with pride and create a jacket that's truly
                 one-of-a-kind. Start designing your custom varsity jacket today!
               </p>
-              <span
-                style={{
-                  border: "0.5px solid black",
-                  padding: "10px",
-                  backgroundColor: "white",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                }}
-                onMouseOver={(e) => (e.currentTarget.style.border = "none")}
-                onMouseOut={(e) =>
-                  (e.currentTarget.style.border = "0.5px solid black")
-                }
+              <button
+                className="btn btn-outline-dark mt-3"
+                style={{ fontWeight: 700 }}
                 onClick={() => navigate(`/AllProducts`)}
               >
                 Customize Your Jacket
-              </span>
+              </button>
             </div>
-
-            <img
-              style={{
-                cursor: "pointer",
-                transition: "transform 0.3s ease",
-                margin: "10px",
-                border: "1px solid #ddd",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-              }}
-              src={ReadyToShip}
-              className="banner-img img-fluid"
-              alt="banner image"
-              // onMouseOver={(e) =>
-              //   (e.currentTarget.style.transform = "scale(1.05)")
-              // }
-              // onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
-            />
+            <div className="col-12 col-md-6 d-flex justify-content-center">
+              <img
+                style={{
+                  cursor: "pointer",
+                  transition: "transform 0.3s ease",
+                  margin: "10px",
+                  border: "1px solid #ddd",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                  maxWidth: "100%", // Make sure image scales with its container
+                }}
+                src={ReadyToShip}
+                className="img-fluid"
+                alt="banner image"
+              />
+            </div>
           </div>
         </div>
+
         <div
           className="parent-container"
           style={{
@@ -503,7 +479,9 @@ const HomePage = () => {
           <div
             className="banner-container d-flex justify-content-center align-items-center"
             style={{
-              width: "45%",
+              width: "70%",
+              paddingLeft: "30%",
+              alignItems: "center",
             }}
           >
             <img
@@ -610,10 +588,7 @@ const HomePage = () => {
                       className="d-block w-100 fixed-size"
                       alt="Review 1"
                     />
-                    <div className="overlay">
-                      <h3>Review 1</h3>
-                      <p>Some description for review 1</p>
-                    </div>
+                    <div className="overlay"></div>
                   </div>
                 </div>
                 <div className="carousel-item">
@@ -623,10 +598,7 @@ const HomePage = () => {
                       className="d-block w-100 fixed-size"
                       alt="Review 2"
                     />
-                    <div className="overlay">
-                      <h3>Review 2</h3>
-                      <p>Some description for review 2</p>
-                    </div>
+                    <div className="overlay"></div>
                   </div>
                 </div>
                 <div className="carousel-item">
@@ -636,84 +608,63 @@ const HomePage = () => {
                       className="d-block w-100 fixed-size"
                       alt="Review 3"
                     />
-                    <div className="overlay">
-                      <h3>Review 3</h3>
-                      <p>Some description for review 3</p>
-                    </div>
+                    <div className="overlay"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div
-          className=""
-          style={{
-            width: "100%",
-          }}
-        >
+        <div className="container-fluid">
           <div
-            className="banner-container d-flex justify-content-center align-items-center"
-            style={{
-              width: "100%",
-              marginTop: "10%",
-            }}
+            className="row justify-content-center align-items-center text-center"
+            style={{ marginTop: "10%" }}
           >
-            <div className="">
-              <p
-                style={{
-                  textAlign: "center",
-                }}
-              >
-                RUNNING WORLD
-              </p>
+            <div className="col-12">
+              <p>RUNNING WORLD</p>
               <h1>EXPLORE THE RANGE</h1>
             </div>
           </div>
-          <div
-            style={{
-              display: "flex",
-              height: "100%",
-              Width: "100%",
-            }}
-          >
-            <div className="image-container">
-              <img src={BombJack} alt="Review 3" className="hover-image" />
-              <div
-                style={{
-                  background: "white",
-                  color: "black",
-                }}
-                className="hover-box"
-                onClick={() => navigate(`/category/bomber-jackets`)}
-              >
-                EXPLORE COLLECTION
+          <div className="row justify-content-center">
+            <div className="col-12 col-md-4 mb-4">
+              <div className="image-container position-relative">
+                <img
+                  src={BombJack}
+                  alt="Bomber Jacket"
+                  className="img-fluid w-100"
+                />
+                <div
+                  className="hover-box"
+                  onClick={() => navigate(`/category/bomber-jackets`)}
+                >
+                  EXPLORE COLLECTION
+                </div>
               </div>
             </div>
-            <div className="image-container">
-              <img src={VarsJack} alt="Review 3" className="hover-image" />
-              <div
-                style={{
-                  background: "white",
-                  color: "black",
-                }}
-                className="hover-box"
-                onClick={() => navigate(`/category/varsity-jackets`)}
-              >
-                EXPLORE COLLECTION
+            <div className="col-12 col-md-4 mb-4">
+              <div className="image-container position-relative">
+                <img
+                  src={VarsJack}
+                  alt="Varsity Jacket"
+                  className="img-fluid w-100"
+                />
+                <div
+                  className="hover-box"
+                  onClick={() => navigate(`/category/varsity-jackets`)}
+                >
+                  EXPLORE COLLECTION
+                </div>
               </div>
             </div>
-            <div className="image-container">
-              <img src={NorthHood} alt="Review 3" className="hover-image" />
-              <div
-                style={{
-                  background: "white",
-                  color: "black",
-                }}
-                className="hover-box"
-                onClick={() => navigate(`/category/hoodies`)}
-              >
-                EXPLORE COLLECTION
+            <div className="col-12 col-md-4 mb-4">
+              <div className="image-container position-relative">
+                <img src={NorthHood} alt="Hoodie" className="img-fluid w-100" />
+                <div
+                  className="hover-box"
+                  onClick={() => navigate(`/category/hoodies`)}
+                >
+                  EXPLORE COLLECTION
+                </div>
               </div>
             </div>
           </div>
